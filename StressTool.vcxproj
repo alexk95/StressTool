@@ -159,15 +159,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\AbstractThreadObject.cpp" />
     <ClCompile Include="src\Application.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\CPUstress.cpp" />
     <ClCompile Include="src\OS.cpp" />
+    <ClCompile Include="src\RAMstress.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\AbstractThreadObject.h" />
     <ClInclude Include="include\Application.h" />
     <ClInclude Include="include\CPUstress.h" />
     <ClInclude Include="include\OS.h" />
+    <ClInclude Include="include\RAMstress.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

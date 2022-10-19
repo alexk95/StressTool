@@ -16,20 +16,41 @@ OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHE
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-#pragma once
+#include "RAMstress.h"
+#include "OS.h"
 
-#include "AbstractThreadObject.h"
+#include <list>
+#include <thread>
 
-class CPUstress : public AbstractThreadObject {
-public:
-	CPUstress(bool _start);
-	virtual ~CPUstress();
+#define BLOCK_SIZE 128
+#define RAM_LIMIT 95.
 
-private:
-	virtual void startWorker(std::thread *& _thread) override;
-	void workerFunction(void);
-	
-	CPUstress() = delete;
-	CPUstress(CPUstress&) = delete;
-	CPUstress& operator = (CPUstress&) = delete;
-};
+#if defined (WIN32)
+#define MAX_DATA_SIZE 0xFFF0
+#else
+#define MAX_DATA_SIZE 0xFFFFFFF0
+#endif
+
+RAMstress::RAMstress(bool _start) {
+	if (_start) start();
+}
+
+RAMstress::~RAMstress() {}
+
+void RAMstress::startWorker(std::thread *& _thread) {
+	_thread = new std::thread(&RAMstress::workerFunction, this);
+}
+
+void RAMstress::workerFunction(void) {
+	std::list<unsigned long long *> data;
+	while (checkContinueRunning()) {
+		if (os::physicalMemoryUsageInPercent() < RAM_LIMIT && data.size() < MAX_DATA_SIZE) {
+			data.push_back(new unsigned long long[BLOCK_SIZE]);
+		}
+		else {
+			for (auto e : data) delete[] e;
+			data.clear();
+		}
+	}
+	for (auto e : data) delete[] e;
+}

@@ -20,16 +20,16 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 
 #include "AbstractThreadObject.h"
 
-class CPUstress : public AbstractThreadObject {
+class RAMstress : public AbstractThreadObject {
 public:
-	CPUstress(bool _start);
-	virtual ~CPUstress();
+	RAMstress(bool _start);
+	virtual ~RAMstress();
 
 private:
 	virtual void startWorker(std::thread *& _thread) override;
 	void workerFunction(void);
-	
-	CPUstress() = delete;
-	CPUstress(CPUstress&) = delete;
-	CPUstress& operator = (CPUstress&) = delete;
+
+	RAMstress() = delete;
+	RAMstress(RAMstress&) = delete;
+	RAMstress& operator = (RAMstress&) = delete;
 };

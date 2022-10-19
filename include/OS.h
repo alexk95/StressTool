@@ -45,4 +45,11 @@ namespace os {
 
 	void clearConsole(void);
 
+	unsigned long long getTotalPhysicalMemory(void);
+	unsigned long long getAvailablePhysicalMemory(void);
+	double physicalMemoryUsageInPercent(void);
+
+	unsigned long long getTotalVirtualMemory(void);
+	unsigned long long getAvailableVirtualMemory(void);
+	double virtualMemoryUsageInPercent(void);
 }

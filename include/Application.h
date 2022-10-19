@@ -22,6 +22,7 @@ TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR TH
 #include <string>
 
 class CPUstress;
+class RAMstress;
 
 class Application {
 public:
@@ -33,18 +34,30 @@ public:
 private:
 	bool anythingIsRunning(void) const;
 	std::string readInput(void) const;
+	std::string memoryToString(unsigned long long _memoryInBytes);
 
 	void startCpu(void);
 	void stopCpu(void);
 	void setCpuThreads(const std::string& _command);
+	
+	void startRam(void);
+	void stopRam(void);
+	void setRamThreads(const std::string& _command);
+
 	void stopAll(void);
 
 	unsigned int			m_cpuCores;
+	unsigned long long		m_physicalMemoryTotal;
+	unsigned long long		m_virtualMemoryTotal;
+
 	bool					m_isExiting;
 	std::string				m_errorMessage;
 	std::string				m_infoMessage;
 
 	unsigned int			m_cpuToStart;
 	std::list<CPUstress *>	m_cpu;
+
+	unsigned int			m_ramToStart;
+	std::list<RAMstress *>	m_ram;
 
 };
